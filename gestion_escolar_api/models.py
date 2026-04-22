@@ -46,4 +46,5 @@ class Maestros(models.Model):
         return "Perfil del maestro "+self.user.first_name+" "+self.user.last_name
     
 # TODO: Agregar modelo de alumnos
+# class Alumnos(models.Model):
 
