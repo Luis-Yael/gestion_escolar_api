@@ -11,6 +11,21 @@ from rest_framework.response import Response
 from django.contrib.auth.models import Group
 import json
 
+class MaestrosAll(generics.CreateAPIView):
+    #Obtener todos los maestros
+    # Necesita permisos de autenticación de usuario para poder acceder a la petición
+    permission_classes = (permissions.IsAuthenticated,)
+    def get(self, request, *args, **kwargs):
+        maestros = Maestros.objects.filter(user__is_active=1).order_by("id")
+        lista = MaestrosSerializer(maestros, many=True).data
+        for maestro in lista:
+            if isinstance(maestro, dict) and "materias_array" in maestro:
+                try:
+                    maestro["materias_array"] = json.loads(maestro["materias_array"])
+                except Exception:
+                    maestro["materias_array"] = []
+        return Response(lista, 200)
+
 class MaestrosView(generics.CreateAPIView):
     # Permisos por método (sobrescribe el comportamiento default)
     # Verifica que el usuario esté autenticado para las peticiones GET, PUT y DELETE

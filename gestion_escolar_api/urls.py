@@ -15,6 +15,8 @@ urlpatterns = [
         #path('admins-edit/', users.AdminsViewEdit.as_view())
     #Create Maestro
         path('maestros/', maestros.MaestrosView.as_view()),
+    #Lista de maestros
+        path('lista-maestros/', maestros.MaestrosAll.as_view()),
     #Create Alumno
         path('alumnos/', alumnos.AlumnosView.as_view()),
     #Login
